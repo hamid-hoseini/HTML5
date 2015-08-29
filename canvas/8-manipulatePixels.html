@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+        canvas {
+            border: 1px solid gray;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: rgb(100,100,100);
+        }
+
+    </style>
+</head>
+<body>
+
+    <img src="nature.jpg" alt="Nature"/>
+    <canvas width="400" height="300"></canvas>
+
+    <script>
+
+        // It takes time for the image element on the page to load the image
+        // from the source file. To wait for that to happen, you can target
+        // two events
+        // 1. document's readystatechange event, and wait for readyState === 'complete' OR
+        // 2. window's load event
+        // You can skip either of these, by waiting for the img's load event (for the image
+        // element created using a new Image() and target the source image's data.)
+
+
+        // document --> readystatechange
+        // readyState === 'complete'
+
+        // window --> load
+        //
+
+        var canvas = document.querySelector('canvas');
+        // context
+        var context = canvas.getContext('2d'); // 'webgl' - 3d context
+
+        // Image element on the page
+        var img_onpage = document.querySelector('img');
+
+        // create an image
+        var img = new Image();
+        img.src = 'nature.jpg';
+        img.addEventListener('load', function () {
+            console.log('Image is loaded ... ');
+            context.drawImage(img, 0, 0);
+
+            // get pixel information for the canvas
+            var imagedata = context.getImageData(0, 0, 400, 300);
+            console.log('imagedata: ', imagedata);
+            var pixel_array = imagedata.data;
+            console.log(pixel_array.length);
+
+
+            // print the r, g, b components for the first pixel.
+            console.log(pixel_array[0]);
+            console.log(pixel_array[1]);
+            console.log(pixel_array[2]);
+
+            // set all the red and green components of the pixel array to 0
+            for (var i = 0; i < pixel_array.length; i+= 4) {
+                pixel_array[i] = pixel_array[i + 1] =0;
+
+            }
+
+            // apply the changes back to the context;
+            context.putImageData(imagedata, 0, 0);
+        });
+
+        document.addEventListener('readystatechange', function () {
+            if (document.readyState === 'complete') {
+                console.log('Got back all the data from the image source ... ');
+                // context.drawImage(img_onpage, 100, 100);
+            }
+        });
+
+        window.addEventListener('load', function () {
+            // context.drawImage(img_onpage, 100, 100);
+        });
+
+
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+        canvas {
+            border: 1px solid gray;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+    </style>
+</head>
+<body>
+
+    <img src="nature.jpg" alt="Nature"/>
+    <canvas width="400" height="300"></canvas>
+
+    <script>
+
+        // It takes time for the image element on the page to load the image
+        // from the source file. To wait for that to happen, you can target
+        // two events
+        // 1. document's readystatechange event, and wait for readyState === 'complete' OR
+        // 2. window's load event
+        // You can skip either of these, by waiting for the img's load event (for the image
+        // element created using a new Image() and target the source image's data.)
+
+
+        // document --> readystatechange
+        // readyState === 'complete'
+
+        // window --> load
+        //
+
+        var canvas = document.querySelector('canvas');
+        // context
+        var context = canvas.getContext('2d'); // 'webgl' - 3d context
+
+        // Image element on the page
+        var img_onpage = document.querySelector('img');
+
+        // create an image
+        var img = new Image();
+        img.src = 'nature.jpg';
+        img.addEventListener('load', function () {
+            console.log('Image is loaded ... ');
+            context.drawImage(img, 75, 75, 150, 150, 0, 0, 600, 600);
+            context.font = '30px Helvetica';
+            context.fillStyle = 'white';
+            context.fillText('Alejandro Munoz', 20, 20);
+            // todo: Increase font size
+        });
+
+        document.addEventListener('readystatechange', function () {
+            if (document.readyState === 'complete') {
+                console.log('Got back all the data from the image source ... ');
+                // context.drawImage(img_onpage, 100, 100);
+            }
+        });
+
+        window.addEventListener('load', function () {
+            // context.drawImage(img_onpage, 100, 100);
+        });
+
+
+    </script>
+
+</body>
+</html>

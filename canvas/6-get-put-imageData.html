@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<img id="scream" src="../images/nature.jpg" alt="The Scream" width="400" height="300">
+<canvas id="myCanvas" width="400" height="300" style="border:1px solid #d3d3d3;">
+    Your browser does not support the HTML5 canvas tag.</canvas>
+
+<script>
+    /*
+     http://www.w3schools.com/tags/canvas_putimagedata.asp
+     http://www.w3schools.com/tags/canvas_getimagedata.asp
+
+     context.getImageData(x,y,width,height);
+     context.putImageData(imgData,x,y,dirtyX,dirtyY,dirtyWidth,dirtyHeight);
+
+     imgData	    Specifies the ImageData object to put back onto the canvas
+     x	            The x-coordinate, in pixels, of the upper-left corner of the ImageData object
+     y	            The y-coordinate, in pixels, of the upper-left corner of the ImageData object
+     dirtyX	        Optional. The horizontal (x) value, in pixels, where to place the image on the canvas
+     dirtyY	        Optional. The vertical (y) value, in pixels, where to place the image on the canvas
+     dirtyWidth	    Optional. The width to use to draw the image on the canvas
+     dirtyHeight	Optional. The height to use to draw the image on the canvas
+    */
+
+
+    document.getElementById("scream").onload = function() {
+        var c = document.getElementById("myCanvas");
+        var ctx = c.getContext("2d");
+        var img = document.getElementById("scream");
+        ctx.drawImage(img, 0, 0);
+        var imgData = ctx.getImageData(0, 0, c.width, c.height);
+        // invert colors
+        var i;
+        for (i = 0; i < imgData.data.length; i += 4) {
+            imgData.data[i] = 255 - imgData.data[i];
+            imgData.data[i+1] = 255 - imgData.data[i+1];
+            imgData.data[i+2] = 255 - imgData.data[i+2];
+            imgData.data[i+3] = 255;
+        }
+        ctx.putImageData(imgData, 0, 0);
+    };
+</script>
+
+</body>
+</html>
