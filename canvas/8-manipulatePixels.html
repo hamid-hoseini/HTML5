@@ -18,7 +18,7 @@
 </head>
 <body>
 
-    <img src="nature.jpg" alt="Nature"/>
+    <img src="../images/nature.jpg" alt="Nature"/>
     <canvas width="400" height="300"></canvas>
 
     <script>
@@ -47,7 +47,7 @@
 
         // create an image
         var img = new Image();
-        img.src = 'nature.jpg';
+        img.src = '../images/nature.jpg';
         img.addEventListener('load', function () {
             console.log('Image is loaded ... ');
             context.drawImage(img, 0, 0);
